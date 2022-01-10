@@ -9,20 +9,3 @@ export {
 export {
   default as FuroContext, //   FuroContextInterface, //   RedirectLoginOptions,
 } from './furo-context';
-//   export {
-//     PopupLoginOptions,
-//     PopupConfigOptions,
-//     GetIdTokenClaimsOptions,
-//     GetTokenWithPopupOptions,
-//     LogoutOptions,
-//     LogoutUrlOptions,
-//     CacheLocation,
-//     GetTokenSilentlyOptions,
-//     IdToken,
-//     User,
-//     ICache,
-//     InMemoryCache,
-//     LocalStorageCache,
-//     Cacheable,
-//   } from '@Furo/furo-spa-js';
-//   export { OAuthError } from './errors';
