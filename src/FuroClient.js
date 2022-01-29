@@ -1,9 +1,8 @@
 // import Lock from 'browser-tabs-lock';
 import axios from 'axios';
-// import jsonwebtoken from 'jsonwebtoken';
 
 const GET_TOKEN_SILENTLY_LOCK_KEY = 'furo.lock.getTokenSilently';
-const BASE_URL = 'https://api.furo.one';
+axios.defaults.baseURL = 'https://api.furo.one';
 
 export default class FuroClient {
   constructor(options) {
@@ -22,8 +21,10 @@ export default class FuroClient {
     // check if user exists in localstorage
     const accessToken = await localStorage.getItem('furo-token');
 
+    if (!accessToken) return null;
+
     // get user profile
-    const { data: user } = await axios.get(`${BASE_URL}/users/me`, {
+    const { data: user } = await axios.get(`/users/me`, {
       headers: { Authorization: `Bearer ${accessToken}` },
     });
 

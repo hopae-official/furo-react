@@ -4,7 +4,7 @@ import FuroContext from './furo-context';
 import { reducer as FuroReducer, initialState } from './reducer';
 import { hasAuthParams } from './utils';
 
-const defaultOnRedirectCallback = (appState) => {
+const defaultOnRedirectCallback = (appState, opts) => {
   window.history.replaceState(
     {},
     document.title,
@@ -56,7 +56,7 @@ const FuroProvider = (opts) => {
           // const { appState } = await client.handleRedirectCallback();
           // onRedirectCallback(appState);
           await client.handleRedirectCallback();
-          onRedirectCallback({});
+          onRedirectCallback({}, opts);
         } else {
           // check if the user is stored in storage. Lock the tab and load the user info
           // await client.checkSession();
