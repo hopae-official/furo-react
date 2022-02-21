@@ -19,7 +19,7 @@ export default class FuroClient {
 
   async getUser(options) {
     // check if user exists in localstorage
-    const accessToken = await localStorage.getItem('furo-token');
+    const accessToken = await localStorage.getItem(`furo-${this.clientId}-token`);
 
     if (!accessToken) return null;
 
@@ -53,7 +53,7 @@ export default class FuroClient {
     // const { accessToken, refreshToken } = await axios.post(`${baseURL}/oauth/token`)
     const accessToken = code;
     // 3. Save them to storage
-    await localStorage.setItem('furo-token', accessToken);
+    await localStorage.setItem(`furo-${this.clientId}-token`, accessToken);
 
     return {};
   }
@@ -68,7 +68,7 @@ export default class FuroClient {
   }
 
   async logout(options) {
-    await localStorage.removeItem('furo-token');
+    await localStorage.removeItem(`furo-${this.clientId}-token`);
     await localStorage.removeItem('furo-user');
     return {};
   }
