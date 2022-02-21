@@ -92,7 +92,7 @@ const FuroProvider = (opts) => {
   const logout = useCallback(
     (opts) => {
       localStorage.removeItem('furo-user');
-      localStorage.removeItem('furo-token');
+      localStorage.removeItem(`furo-${client.clientId}-token`);
       dispatch({ type: 'LOGOUT' });
       // const maybePromise = client.logout(opts);
       // if (opts.localOnly) {
@@ -120,7 +120,7 @@ const FuroProvider = (opts) => {
       //     user: await client.getUser(),
       //   });
       // }
-      const token = await localStorage.getItem('furo-token');
+      const token = await localStorage.getItem(`furo-${client.clientId}-token`);
       return token;
     },
     [client],
