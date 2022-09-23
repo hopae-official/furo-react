@@ -89,6 +89,11 @@ const FuroProvider = (opts) => {
 
   // const loginWithPopup =
 
+  const loginWithKakao = useCallback(
+    (opts) => client.loginWithKakao(toFuroLoginRedirectOptions(opts)),
+    [client],
+  );
+
   const logout = useCallback(
     (opts) => {
       localStorage.removeItem('furo-user');
@@ -156,6 +161,7 @@ const FuroProvider = (opts) => {
         // getIdTokenClaims,
         loginWithRedirect,
         // loginWithPopup,
+        loginWithKakao,
         logout,
         handleRedirectCallback,
       }}

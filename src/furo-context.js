@@ -14,6 +14,7 @@ const initialContext = {
   getIdTokenClaims: stub,
   loginWithRedirect: stub,
   loginWithPopup: stub,
+  loginWithKakao: stub,
   logout: stub,
   handleRedirectCallback: stub,
 };

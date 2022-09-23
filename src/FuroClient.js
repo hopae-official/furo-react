@@ -72,6 +72,15 @@ export default class FuroClient {
     await localStorage.removeItem('furo-user');
     return {};
   }
+
+  async loginWithKakao(KAKAO_REST_API_KEY) {
+    if (!KAKAO_REST_API_KEY) throw 'API KEY is empty';
+    const redirectUri = encodeURIComponent(
+      `${FURO_AUTH_URL}/oauth/kakao/${this.clientId}`,
+    );
+    const url = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_REST_API_KEY}&redirect_uri=${redirectUri}&response_type=code`;
+    window.location.href = url;
+  }
 }
 
 // --------UTILS------
