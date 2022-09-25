@@ -4,6 +4,8 @@ import axios from 'axios';
 const GET_TOKEN_SILENTLY_LOCK_KEY = 'furo.lock.getTokenSilently';
 axios.defaults.baseURL = 'https://api.furo.one';
 
+const FURO_AUTH_URL = 'https://auth.furo.one'
+
 export default class FuroClient {
   constructor(options) {
     // typeof window !== 'undefined' && validateCrypto();\
