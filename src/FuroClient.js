@@ -26,11 +26,16 @@ export default class FuroClient {
     if (!accessToken) return null;
 
     // get user profile
-    const { data: user } = await axios.get(`/users/me`, {
-      headers: { Authorization: `Bearer ${accessToken}` },
-    });
-
-    return user;
+    try {
+      const { data: user } = await axios.get(`/users/me`, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+      return user;
+    } catch (e) {
+      await localStorage.removeItem(`furo-${this.clientId}-token`);
+      await localStorage.removeItem('furo-user');
+      return null;
+    }
   }
 
   async loginWithRedirect() {
