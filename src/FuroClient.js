@@ -32,6 +32,7 @@ export default class FuroClient {
       });
       return user;
     } catch (e) {
+      console.warn(e);
       await localStorage.removeItem(`furo-${this.clientId}-token`);
       await localStorage.removeItem('furo-user');
       return null;
