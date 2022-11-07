@@ -15,11 +15,12 @@ const defaultOnRedirectCallback = (appState, opts) => {
 };
 
 const toFuroClientOptions = (opts) => {
-  const { clientId, redirectUri, maxAge, ...validOpts } = opts;
+  const { clientId, redirectUri, apiUrl, maxAge, ...validOpts } = opts;
   return {
     ...validOpts,
     client_id: clientId,
     redirect_uri: redirectUri,
+    api_url: apiUrl,
     max_age: maxAge,
     furoClient: {
       name: 'furo-react',

@@ -12,6 +12,7 @@ export default class FuroClient {
     this.domain = options.domain;
     this.clientId = options.client_id;
     this.redirectURI = options.redirect_uri;
+    if(options.api_url) axios.defaults.baseURL = options.api_url;
   }
 
   async buildAuthorizeUrl(options) {
