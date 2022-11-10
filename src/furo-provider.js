@@ -50,7 +50,7 @@ const FuroProvider = (opts) => {
 
   // check
   useEffect(() => {
-    (async () => {
+      const init = async () => {
       try {
         // check if url has auth params
         if (hasAuthParams() && !skipRedirectCallback) {
@@ -64,13 +64,21 @@ const FuroProvider = (opts) => {
           console.log(`Getting token from storage... Checking Sessions`);
         }
         const user = await client.getUser();
+        if(!user) logout();
         dispatch({ type: 'INITIALISED', user });
       } catch (error) {
+        try {
+          const {access_token, refresh_token} = await client.refreshTokenSilently();
+          if (access_token && refresh_token) init();
+        } catch (error) {
+          dispatch({ type: 'ERROR', error: error });
+        }
         console.error(error);
         // normalize error instance later error: loginError(error);
         dispatch({ type: 'ERROR', error: error });
       }
-    })();
+    };
+    init();
   }, [client, onRedirectCallback, skipRedirectCallback]);
 
   const buildAuthorizeUrl = useCallback(
@@ -95,10 +103,16 @@ const FuroProvider = (opts) => {
     [client],
   );
 
+  const refreshTokenSilently = useCallback(
+    (opts) => client.refreshTokenSilently(toFuroLoginRedirectOptions(opts)),
+    [client],
+  );
+
   const logout = useCallback(
     (opts) => {
       localStorage.removeItem('furo-user');
       localStorage.removeItem(`furo-${client.clientId}-token`);
+      sessionStorage.removeItem(`furo-${client.clientId}-token`);
       dispatch({ type: 'LOGOUT' });
       // const maybePromise = client.logout(opts);
       // if (opts.localOnly) {
@@ -160,6 +174,7 @@ const FuroProvider = (opts) => {
         getAccessTokenSilently,
         // getAccessTokenWithPopup,
         // getIdTokenClaims,
+        refreshTokenSilently,
         loginWithRedirect,
         // loginWithPopup,
         loginWithKakao,

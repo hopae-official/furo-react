@@ -42,6 +42,7 @@ export default class FuroClient {
     // 1. check params
     const params = new URLSearchParams(url);
     const code = params.get('code');
+    const refresh = params.get('refresh');
     const uid = params.get('uid');
 
     // if (!code || !uid)
@@ -54,14 +55,17 @@ export default class FuroClient {
     // 2. Call to get tokens (accessToken, refreshToken)
     // const { accessToken, refreshToken } = await axios.post(`${baseURL}/oauth/token`)
     const accessToken = code;
+    const refreshToken = refresh;
     // 3. Save them to storage
     await localStorage.setItem(`furo-${this.clientId}-token`, accessToken);
+    await localStorage.setItem(`furo-${this.clientId}-refresh`, refreshToken);
 
     return {};
   }
 
   async checkSession(options) {
     // check if the storage has
+    return await sessionStorage.getItem(`furo-${this.clientId}-token`);
   }
 
   async getTokenSilently(options) {
@@ -69,8 +73,24 @@ export default class FuroClient {
     // 2. If not, open an iframe with '/authorize' URL and get the new token
   }
 
+  async refreshTokenSilently(options) {
+    const refreshToken = await localStorage.getItem(`furo-${this.clientId}-refresh`);
+    if (!refreshToken) return null;
+    const accessToken = await localStorage.getItem(`furo-${this.clientId}-token`);
+    const { data } = await axios.post(`/users/refresh`, {
+      accessToken
+    }, {
+      headers: { Authorization: `Bearer ${refreshToken}` },
+    });
+    const { access_token, refresh_token } = data;
+    await localStorage.setItem(`furo-${this.clientId}-token`, access_token);
+    await localStorage.setItem(`furo-${this.clientId}-refresh`, refresh_token);
+    return { access_token, refresh_token };
+  }
+
   async logout(options) {
     await localStorage.removeItem(`furo-${this.clientId}-token`);
+    await localStorage.removeItem(`furo-${this.clientId}-refresh`);
     await localStorage.removeItem('furo-user');
     return {};
   }
