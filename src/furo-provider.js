@@ -67,15 +67,14 @@ const FuroProvider = (opts) => {
         if(!user) logout();
         dispatch({ type: 'INITIALISED', user });
       } catch (error) {
+        console.error(error);
         try {
           const {access_token, refresh_token} = await client.refreshTokenSilently();
           if (access_token && refresh_token) init();
         } catch (error) {
+        // normalize error instance later error: loginError(error);
           dispatch({ type: 'ERROR', error: error });
         }
-        console.error(error);
-        // normalize error instance later error: loginError(error);
-        dispatch({ type: 'ERROR', error: error });
       }
     };
     init();
