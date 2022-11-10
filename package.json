@@ -1,6 +1,6 @@
 {
   "name": "furo-react",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "React SDK for Furo Auth",
   "type": "module",
   "types": "./index.d.ts",
