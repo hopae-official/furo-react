@@ -1,9 +1,9 @@
 {
   "name": "furo-react",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "description": "React SDK for Furo Auth",
   "type": "module",
-  "types": "./index.d.ts",
+  "types": "./dist/index.d.ts",
   "main": "./dist/furo-react.js",
   "module": "./dist/furo-react.esm.js",
   "unpkg": "./dist/furo-react.umd.js",
