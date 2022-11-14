@@ -140,7 +140,17 @@ const FuroProvider = (opts) => {
       //   });
       // }
       const token = await localStorage.getItem(`furo-${client.clientId}-token`);
-      return token;
+      const payloadBase64 = token.split('.')[1];
+      const decodedJson = Buffer.from(payloadBase64, 'base64').toString();
+      const decoded = JSON.parse(decodedJson);
+      const exp = decoded.exp;
+      if(!exp) return token;
+      const expired = (Date.now() >= exp * 1000)
+      if(!expired) return token;
+      else {
+        const { access_token: token } = await refreshTokenSilently()
+        return token;
+      }
     },
     [client],
   );

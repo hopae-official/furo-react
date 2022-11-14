@@ -8,6 +8,7 @@ export declare interface FuroProviderOptions {
 export declare function FuroProvider(options: FuroProviderOptions): JSX.Element
 
 export declare function useFuro(): {
+    getAccessTokenSilently: () => void;
     loginWithRedirect: () => void;
     logout: () => void;
     isAuthenticated: boolean;
