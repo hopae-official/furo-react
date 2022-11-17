@@ -2,6 +2,7 @@ export declare interface FuroProviderOptions {
   domain: string;
   clientId: string;
   redirectUri: string;
+  apiUrl?: string;
   children?: React.ReactNode;
 }
 

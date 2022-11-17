@@ -77,7 +77,7 @@ export default class FuroClient {
     const refreshToken = await localStorage.getItem(`furo-${this.clientId}-refresh`);
     if (!refreshToken) return null;
     const accessToken = await localStorage.getItem(`furo-${this.clientId}-token`);
-    const { data } = await axios.post(`/users/refresh`, {
+    const { data } = await axios.post(`/sessions/token/refresh`, {
       accessToken
     }, {
       headers: { Authorization: `Bearer ${refreshToken}` },
