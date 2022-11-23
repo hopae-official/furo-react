@@ -3,6 +3,7 @@ import FuroClient from './FuroClient';
 import FuroContext from './furo-context';
 import { reducer as FuroReducer, initialState } from './reducer';
 import { hasAuthParams } from './utils';
+import { Buffer } from "buffer";
 
 const defaultOnRedirectCallback = (appState, opts) => {
   window.history.replaceState(
