@@ -1,6 +1,5 @@
 // import Lock from 'browser-tabs-lock';
 import axios from 'axios';
-import { Buffer } from "buffer";
 
 const GET_TOKEN_SILENTLY_LOCK_KEY = 'furo.lock.getTokenSilently';
 axios.defaults.baseURL = 'https://api.furo.one';
@@ -43,8 +42,7 @@ export default class FuroClient {
     // 1. check params
     const params = new URLSearchParams(url);
     const code = params.get('code');
-    const refresh = params.get('refresh');
-    const uid = params.get('uid');
+    const { access_token: accessToken, refresh_token: refreshToken } = await axios.post(`/sessions/code/authenticate`, { code });
 
     // if (!code || !uid)
     //   throw `Missing ${!code && 'code'} ${!code && !uid && '/'} ${
@@ -52,15 +50,13 @@ export default class FuroClient {
     //   }`;
 
     // Check if token's pid and clientId is match
-    const base64Payload = code.split('.')[1];
-    const payload = Buffer.from(base64Payload, 'base64');
-    const { pid } = JSON.parse(payload.toString());
-    if (!pid || pid !== this.clientId) return null;
+    // const base64Payload = code.split('.')[1];
+    // const payload = Buffer.from(base64Payload, 'base64');
+    // const { pid } = JSON.parse(payload.toString());
+    // if (!pid || pid !== this.clientId) return null;
 
     // 2. Call to get tokens (accessToken, refreshToken)
     // const { accessToken, refreshToken } = await axios.post(`${baseURL}/oauth/token`)
-    const accessToken = code;
-    const refreshToken = refresh;
     // 3. Save them to storage
     await localStorage.setItem(`furo-${this.clientId}-token`, accessToken);
     await localStorage.setItem(`furo-${this.clientId}-refresh`, refreshToken);
