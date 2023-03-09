@@ -42,8 +42,8 @@ export default class FuroClient {
     // 1. check params
     const params = new URLSearchParams(url);
     const code = params.get('code');
-    const data = await axios.post(`/sessions/code/authenticate`, { code });
-    const { access_token: accessToken, refresh_token: refreshToken } = data;
+    const response = await axios.post(`/sessions/code/authenticate`, { code });
+    const { access_token: accessToken, refresh_token: refreshToken } = response.data;
     // if (!code || !uid)
     //   throw `Missing ${!code && 'code'} ${!code && !uid && '/'} ${
     //     !uid && 'UID'
