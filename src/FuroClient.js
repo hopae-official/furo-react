@@ -1,5 +1,6 @@
 // import Lock from 'browser-tabs-lock';
 import axios from 'axios';
+import { Buffer } from "buffer";
 
 const GET_TOKEN_SILENTLY_LOCK_KEY = 'furo.lock.getTokenSilently';
 axios.defaults.baseURL = 'https://api.furo.one';
