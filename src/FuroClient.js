@@ -51,10 +51,10 @@ export default class FuroClient {
     //   }`;
 
     // Check if token's pid and clientId is match
-    // const base64Payload = code.split('.')[1];
-    // const payload = Buffer.from(base64Payload, 'base64');
-    // const { pid } = JSON.parse(payload.toString());
-    // if (!pid || pid !== this.clientId) return null;
+    const base64Payload = accessToken.split('.')[1];
+    const payload = Buffer.from(base64Payload, 'base64');
+    const { pid } = JSON.parse(payload.toString());
+    if (!pid || pid !== this.clientId) return null;
 
     // 2. Call to get tokens (accessToken, refreshToken)
     // const { accessToken, refreshToken } = await axios.post(`${baseURL}/oauth/token`)
