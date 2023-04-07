@@ -1,11 +1,11 @@
 // import Lock from 'browser-tabs-lock';
 import axios from 'axios';
-import { Buffer } from "buffer";
+import { Buffer } from 'buffer';
 
 const GET_TOKEN_SILENTLY_LOCK_KEY = 'furo.lock.getTokenSilently';
 axios.defaults.baseURL = 'https://api.furo.one';
 
-const FURO_AUTH_URL = 'https://auth.furo.one'
+const FURO_AUTH_URL = 'https://auth.furo.one';
 
 export default class FuroClient {
   constructor(options) {
@@ -13,17 +13,19 @@ export default class FuroClient {
     this.domain = options.domain;
     this.clientId = options.client_id;
     this.redirectURI = options.redirect_uri;
-    if(options.api_url) axios.defaults.baseURL = options.api_url;
+    if (options.api_url) axios.defaults.baseURL = options.api_url;
   }
 
   async buildAuthorizeUrl(options) {
     // const { redirect_uri, appState, ...authorizeOptions } = options;
-    return `${this.domain}/login/${this.clientId}`;
+    return `${this.domain}/login/${this.clientId}?callback=${this.redirectURI}`;
   }
 
   async getUser(options) {
     // check if user exists in localstorage
-    const accessToken = await localStorage.getItem(`furo-${this.clientId}-token`);
+    const accessToken = await localStorage.getItem(
+      `furo-${this.clientId}-token`,
+    );
 
     if (!accessToken) return null;
 
@@ -44,7 +46,8 @@ export default class FuroClient {
     const params = new URLSearchParams(url);
     const code = params.get('code');
     const response = await axios.post(`/sessions/code/authenticate`, { code });
-    const { access_token: accessToken, refresh_token: refreshToken } = response.data;
+    const { access_token: accessToken, refresh_token: refreshToken } =
+      response.data;
     // if (!code || !uid)
     //   throw `Missing ${!code && 'code'} ${!code && !uid && '/'} ${
     //     !uid && 'UID'
@@ -76,14 +79,22 @@ export default class FuroClient {
   }
 
   async refreshTokenSilently(options) {
-    const refreshToken = await localStorage.getItem(`furo-${this.clientId}-refresh`);
+    const refreshToken = await localStorage.getItem(
+      `furo-${this.clientId}-refresh`,
+    );
     if (!refreshToken) return null;
-    const accessToken = await localStorage.getItem(`furo-${this.clientId}-token`);
-    const { data } = await axios.post(`/sessions/token/refresh`, {
-      accessToken
-    }, {
-      headers: { Authorization: `Bearer ${refreshToken}` },
-    });
+    const accessToken = await localStorage.getItem(
+      `furo-${this.clientId}-token`,
+    );
+    const { data } = await axios.post(
+      `/sessions/token/refresh`,
+      {
+        accessToken,
+      },
+      {
+        headers: { Authorization: `Bearer ${refreshToken}` },
+      },
+    );
     const { access_token, refresh_token } = data;
     await localStorage.setItem(`furo-${this.clientId}-token`, access_token);
     await localStorage.setItem(`furo-${this.clientId}-refresh`, refresh_token);
