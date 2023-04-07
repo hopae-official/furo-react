@@ -18,7 +18,11 @@ export default class FuroClient {
 
   async buildAuthorizeUrl(options) {
     // const { redirect_uri, appState, ...authorizeOptions } = options;
-    return `${this.domain}/login/${this.clientId}`;
+    const baseUrl = `${this.domain}/login/${this.clientId}`;
+    if (this.redirectURI)
+      return `${baseUrl}?redirect_uri=${encodeURIComponent(this.redirectURI)}`
+    else
+      return baseUrl;
   }
 
   async getUser(options) {
