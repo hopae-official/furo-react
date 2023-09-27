@@ -6,13 +6,13 @@ export declare interface FuroProviderOptions {
   children?: React.ReactNode;
 }
 
-export declare function FuroProvider(options: FuroProviderOptions): JSX.Element
+export declare function FuroProvider(options: FuroProviderOptions): JSX.Element;
 
 export declare function useFuro(): {
-    getAccessTokenSilently: () => void;
-    loginWithRedirect: () => void;
-    logout: () => void;
-    isAuthenticated: boolean;
-    isLoading: boolean;
-    user: any;
+  getAccessTokenSilently: () => void;
+  loginWithRedirect: () => void;
+  logout: () => void;
+  isAuthenticated: boolean;
+  isLoading: boolean;
+  user: any;
 };
