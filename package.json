@@ -13,6 +13,7 @@
   },
   "scripts": {
     "build": "microbundle --jsx React.createElement --jsxFragment React.Fragment --jsxImportSource react",
+    "postbuild": "cp ./index.d.ts ./dist/index.d.ts",
     "rollup": "rollup -c",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
